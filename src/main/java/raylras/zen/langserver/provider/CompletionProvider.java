@@ -90,6 +90,19 @@ public final class CompletionProvider {
                 return null;
             }
 
+            // import xxx;text|
+            //           ^____
+            if (containsLeading(ctx.SEMICOLON())) {
+                completeLocalSymbols(text);
+                completeGlobalSymbols(text);
+                completeKeywords(text, Keywords.STATEMENT);
+                return null;
+            }
+
+            // import xxx;pre.text
+            //               ^____
+
+
             // import foo.bar text|
             //            ^^^ ____
             if (!containsTailing(ctx.qualifiedName())) {
